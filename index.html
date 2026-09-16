@@ -1,0 +1,203 @@
+<div class="item">
+17:30 东京站
+</div>
+ 
+<div class="item">
+入住：
+Ginza Capital Hotel Moegi
+</div>
+ 
+</div>
+ 
+</div>
+</details>
+ 
+ 
+<details>
+<summary>10月27日｜银座购物 + 回国</summary>
+ 
+<div class="content">
+ 
+<div class="timeline">
+ 
+<div class="item">
+GINZA SIX
+</div>
+ 
+<div class="item">
+银座三越
+</div>
+ 
+<div class="item">
+银座松屋
+</div>
+ 
+<div class="item">
+14:30前往机场
+</div>
+ 
+<div class="item">
+19:30 CA920回上海
+</div>
+ 
+</div>
+ 
+</div>
+</details>
+ 
+ 
+<div class="card">
+ 
+<h2>🛍 Montbell购物清单</h2>
+ 
+<div class="checklist">
+ 
+<label><input type="checkbox"> Plasma 1000</label>
+<label><input type="checkbox"> Versalite</label>
+<label><input type="checkbox"> Alpine Down</label>
+<label><input type="checkbox"> 日本限定T恤</label>
+<label><input type="checkbox"> 水壶</label>
+ 
+</div>
+ 
+</div>
+ 
+ 
+<div class="card">
+ 
+<h2>🍜 美食打卡</h2>
+ 
+<div class="checklist">
+ 
+<label><input type="checkbox"> Nokkedon海鲜丼</label>
+<label><input type="checkbox"> 青森扇贝</label>
+<label><input type="checkbox"> 苹果派</label>
+<label><input type="checkbox"> 味噌贝烧</label>
+<label><input type="checkbox"> 大间金枪鱼</label>
+<label><input type="checkbox"> 津轻牛</label>
+<label><input type="checkbox"> 煮干拉面</label>
+ 
+</div>
+ 
+</div>
+ 
+ 
+<div class="card">
+ 
+<h2>💴 预算统计</h2>
+ 
+<div class="row">
+ 
+<div>
+住宿(¥)
+<input type="number" id="hotel" value="0">
+</div>
+ 
+<div>
+餐饮(¥)
+<input type="number" id="food" value="0">
+</div>
+ 
+<div>
+购物(¥)
+<input type="number" id="shopping" value="0">
+</div>
+ 
+<div>
+其他(¥)
+<input type="number" id="other" value="0">
+</div>
+ 
+</div>
+ 
+<h3>总计：¥<span id="total">0</span></h3>
+ 
+</div>
+ 
+ 
+<div class="card">
+ 
+<h2>📝 旅行笔记</h2>
+ 
+<textarea id="notes"
+placeholder="记录每天的见闻、美食、照片机位..."></textarea>
+ 
+</div>
+ 
+</div>
+ 
+<button class="top-btn"
+onclick="window.scrollTo({top:0,behavior:'smooth'})">
+↑
+</button>
+ 
+<script>
+ 
+function toggleDark(){
+document.body.classList.toggle("dark");
+localStorage.setItem(
+"darkMode",
+document.body.classList.contains("dark")
+);
+}
+ 
+if(localStorage.getItem("darkMode")==="true"){
+document.body.classList.add("dark");
+}
+ 
+ 
+const notes=document.getElementById("notes");
+ 
+notes.value=
+localStorage.getItem("tripNotes")||"";
+ 
+notes.addEventListener("input",()=>{
+localStorage.setItem(
+"tripNotes",
+notes.value
+);
+});
+ 
+ 
+function calc(){
+ 
+const hotel=
+Number(document.getElementById("hotel").value)||0;
+ 
+const food=
+Number(document.getElementById("food").value)||0;
+ 
+const shopping=
+Number(document.getElementById("shopping").value)||0;
+ 
+const other=
+Number(document.getElementById("other").value)||0;
+ 
+const total=
+hotel+food+shopping+other;
+ 
+document.getElementById("total").innerText=total;
+ 
+localStorage.setItem("hotel",hotel);
+localStorage.setItem("food",food);
+localStorage.setItem("shopping",shopping);
+localStorage.setItem("other",other);
+}
+ 
+["hotel","food","shopping","other"].forEach(id=>{
+ 
+const el=document.getElementById(id);
+ 
+el.value=
+localStorage.getItem(id)||0;
+ 
+el.addEventListener("input",calc);
+ 
+});
+ 
+calc();
+ 
+</script>
+ 
+</body>
+</html>
