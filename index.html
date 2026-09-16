@@ -3,171 +3,122 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>🍁 东京・青森赏枫之旅</title>
 
 <style>
-
 :root{
- --bg:#f3f6fa;
- --card:#ffffff;
- --text:#222;
- --primary:#d84e44;
- --border:#e5e7eb;
+--bg:#f5f7fa;
+--card:#fff;
+--text:#222;
+--primary:#d94841;
 }
 
 .dark{
- --bg:#111827;
- --card:#1f2937;
- --text:#f8fafc;
- --primary:#f97316;
- --border:#374151;
-}
-
-*{
- box-sizing:border-box;
+--bg:#111827;
+--card:#1f2937;
+--text:#f9fafb;
+--primary:#fb923c;
 }
 
 body{
- margin:0;
- background:var(--bg);
- color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- transition:.3s;
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:var(--bg);
+color:var(--text);
+transition:.3s;
 }
 
 header{
- background:linear-gradient(135deg,#d94841,#f59e0b);
- color:white;
- text-align:center;
- padding:30px 15px;
+background:linear-gradient(135deg,#d94841,#f59e0b);
+color:#fff;
+padding:30px;
+text-align:center;
 }
 
 .container{
- max-width:900px;
- margin:auto;
- padding:15px;
+max-width:1000px;
+margin:auto;
+padding:15px;
 }
 
 .card{
- background:var(--card);
- border-radius:16px;
- padding:15px;
- margin-bottom:15px;
- box-shadow:0 3px 12px rgba(0,0,0,.07);
-}
-
-h1,h2,h3{
- margin-top:0;
-}
-
-.btn{
- display:inline-block;
- background:#2563eb;
- color:white;
- text-decoration:none;
- padding:8px 12px;
- border-radius:8px;
- margin-top:8px;
-}
-
-.btn-orange{
- background:#ea580c;
-}
-
-.btn-green{
- background:#16a34a;
+background:var(--card);
+padding:18px;
+border-radius:16px;
+margin-bottom:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
 details{
- background:var(--card);
- border-radius:16px;
- margin-bottom:12px;
- overflow:hidden;
+background:var(--card);
+border-radius:16px;
+margin-bottom:15px;
+overflow:hidden;
 }
 
 summary{
- padding:16px;
- cursor:pointer;
- font-weight:700;
+padding:18px;
+font-weight:700;
+cursor:pointer;
 }
 
 .content{
- padding:0 16px 16px;
+padding:0 18px 18px;
 }
 
 .timeline{
- border-left:3px solid #d1d5db;
- padding-left:15px;
- margin-left:5px;
+border-left:3px solid #ddd;
+padding-left:15px;
 }
 
 .item{
- margin-bottom:14px;
+margin-bottom:14px;
 }
 
 .time{
- color:#dc2626;
- font-weight:700;
+font-weight:bold;
+color:#dc2626;
 }
 
-input[type=number]{
- width:100%;
- padding:10px;
- border-radius:8px;
- border:1px solid var(--border);
+.btn{
+display:inline-block;
+padding:8px 12px;
+border-radius:8px;
+background:#2563eb;
+color:#fff;
+text-decoration:none;
+margin-right:6px;
+margin-bottom:6px;
+border:none;
+cursor:pointer;
 }
 
 textarea{
- width:100%;
- min-height:150px;
- border-radius:10px;
- padding:10px;
- border:1px solid var(--border);
- background:var(--card);
- color:var(--text);
+width:100%;
+min-height:160px;
+padding:10px;
+border-radius:10px;
 }
 
 .checklist label{
- display:block;
- padding:6px 0;
+display:block;
+padding:5px 0;
+}
+
+input[type="number"]{
+width:100%;
+padding:8px;
+margin-bottom:8px;
 }
 
 .badge{
- display:inline-block;
- padding:4px 10px;
- background:#fef3c7;
- border-radius:999px;
- font-size:12px;
- margin-right:6px;
+display:inline-block;
+padding:4px 10px;
+border-radius:20px;
+background:#fef3c7;
+font-size:12px;
+margin-right:5px;
 }
-
-.row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-@media(max-width:600px){
- .row{
-  grid-template-columns:1fr;
- }
-}
-
-.top-btn{
- position:fixed;
- right:15px;
- bottom:15px;
- border:none;
- border-radius:50%;
- width:50px;
- height:50px;
- background:#2563eb;
- color:white;
- font-size:20px;
- cursor:pointer;
-}
-
 </style>
 </head>
 
@@ -175,49 +126,47 @@ textarea{
 
 <header>
 <h1>🍁 东京・青森赏枫之旅</h1>
-<p>2026.10.23 - 2026.10.27</p>
+<p>2026/10/23 - 2026/10/27</p>
+<p>4人同行（30岁×2｜55岁×2）</p>
 </header>
 
 <div class="container">
 
 <div class="card">
 
-<button onclick="toggleDark()" class="btn">
-🌙 深色模式
-</button>
-
-<button onclick="window.print()" class="btn btn-orange">
-🖨 打印PDF
-</button>
+<button class="btn" onclick="toggleDark()">🌙 深色模式</button>
+<button class="btn" onclick="window.print()">🖨 打印PDF</button>
 
 <h2>旅行总览</h2>
 
-<p>✈️ CA929 上海→东京</p>
-<p>🚄 东京⇄新青森（JR Pass）</p>
-<p>🏨 Dormy Inn Aomori</p>
-<p>🏨 Ginza Capital Hotel Moegi</p>
+<p>✈️ CA929 上海→成田</p>
+<p>✈️ CA920 成田→上海</p>
+
+<p>🏨 Dormy Inn Aomori (10/23-10/26)</p>
+<p>🏨 Ginza Capital Hotel Moegi (10/26)</p>
 
 <span class="badge">八甲田山 ★★★★★</span>
 <span class="badge">十和田湖 ★★★★★</span>
-<span class="badge">奥入濑 ★★★★★</span>
+<span class="badge">弘前城 ★★★★★</span>
 
 </div>
-
 
 <div class="card">
-<h2>✅ 旅行进度</h2>
+
+<h2>✅ 必吃清单</h2>
 
 <div class="checklist">
-
-<label><input type="checkbox"> Day1 东京→青森</label>
-<label><input type="checkbox"> Day2 八甲田・十和田湖</label>
-<label><input type="checkbox"> Day3 弘前</label>
-<label><input type="checkbox"> Day4 东京</label>
-<label><input type="checkbox"> Day5 银座购物</label>
+<label><input type="checkbox"> Nokkedon海鲜饭</label>
+<label><input type="checkbox"> 味噌贝烧</label>
+<label><input type="checkbox"> 青森扇贝</label>
+<label><input type="checkbox"> 大间金枪鱼</label>
+<label><input type="checkbox"> 姫鳟料理</label>
+<label><input type="checkbox"> 津轻牛</label>
+<label><input type="checkbox"> 煮干拉面</label>
+<label><input type="checkbox"> 苹果派</label>
+</div>
 
 </div>
-</div>
-
 
 <details open>
 <summary>10月23日｜上海 → 东京 → 青森</summary>
@@ -226,138 +175,191 @@ textarea{
 <div class="timeline">
 
 <div class="item">
-<div class="time">14:00</div>
-CA929抵达成田
+<div class="time">10:00</div>
+CA929起飞
 </div>
 
 <div class="item">
-<div class="time">16:20</div>
-Hayabusa 33（推荐）
-<br>
-东京→新青森
-<br>
-E窗
+<div class="time">14:00</div>
+抵达成田T1
+</div>
+
+<div class="item">
+<div class="time">15:00-15:30</div>
+入境 + JR Pass换票
+</div>
+
+<div class="item">
+<div class="time">东京站</div>
+🍱 推荐采购：
+<ul>
+<li>牛肉どまん中</li>
+<li>牛舌便当</li>
+<li>海鲜便当</li>
+</ul>
+
+🥤 推荐零食：
+<ul>
+<li>苹果汁</li>
+<li>明治巧克力</li>
+<li>柿种</li>
+</ul>
+</div>
+
+<div class="item">
+<div class="time">16:20（目标）</div>
+Hayabusa 33<br>
+东京 → 新青森<br>
+推荐 E窗
 </div>
 
 <div class="item">
 <div class="time">20:00</div>
-抵达青森
+入住 Dormy Inn Aomori
 </div>
 
 <div class="item">
-酒店：
-Dormy Inn Aomori
+<div class="time">晚餐</div>
+推荐：
+<ul>
+<li>お食事処 おさない</li>
+<li>帆立小屋</li>
+</ul>
+</div>
+
+<div class="item">
+<div class="time">宵夜</div>
+Dormy Inn 夜鸣拉面
 </div>
 
 </div>
 </div>
-
 </details>
 
-
-
 <details>
-<summary>10月24日｜包车红叶路线</summary>
+<summary>10月24日｜八甲田山・十和田湖包车</summary>
 
 <div class="content">
 
-https://maps.google.com/?q=Hakkoda+Ropeway
-📍八甲田导航
-</a>
+<div class="timeline">
 
-https://maps.google.com/?q=Lake+Towada
-📍十和田湖导航
-</a>
+<div class="item"><div class="time">08:00</div>酒店出发</div>
+<div class="item"><div class="time">08:45</div>八甲田山缆车</div>
+<div class="item"><div class="time">10:30</div>睡莲沼</div>
+<div class="item"><div class="time">11:00</div>城仓大桥</div>
+<div class="item"><div class="time">11:45</div>酸汤温泉地狱沼</div>
+
+<div class="item">
+<div class="time">12:45</div>
+十和田湖午餐
+
+<ul>
+<li>姫鳟盐烤</li>
+<li>姫鳟刺身</li>
+<li>十和田牛</li>
+</ul>
+</div>
+
+<div class="item"><div class="time">14:00</div>十和田湖游船</div>
+<div class="item"><div class="time">15:00</div>乙女像</div>
+<div class="item"><div class="time">15:30</div>十和田神社</div>
+<div class="item"><div class="time">18:00</div>返回青森</div>
+
+<div class="item">
+<div class="time">晚餐推荐</div>
+
+<ul>
+<li>居酒屋弁庆</li>
+<li>炉端烧 磯じま</li>
+</ul>
+
+推荐：
+<ul>
+<li>大间金枪鱼</li>
+<li>青森扇贝</li>
+<li>苹果酒</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+</details>
+
+<details>
+<summary>10月25日｜弘前城・Montbell</summary>
+
+<div class="content">
 
 <div class="timeline">
 
+<div class="item"><div class="time">07:45</div>酒店出发</div>
+
 <div class="item">
-<div class="time">08:00</div>
-酒店出发
+<div class="time">08:00-09:00</div>
+青森鱼菜中心早餐
+<br>
+Nokkedon自助海鲜饭
+</div>
+
+<div class="item"><div class="time">09:18</div>JR前往弘前</div>
+
+<div class="item">
+<div class="time">10:00-12:00</div>
+弘前城
+<br>
+红叶大道
+<br>
+护城河
 </div>
 
 <div class="item">
-<div class="time">08:45</div>
-八甲田山缆车
+<div class="time">12:00</div>
+Restaurant 山崎
+<ul>
+<li>津轻牛</li>
+<li>苹果咖喱</li>
+</ul>
 </div>
 
-<div class="item">
-<div class="time">10:30</div>
-睡莲沼
-</div>
+<div class="item"><div class="time">13:30</div>藤田纪念庭园</div>
 
-<div class="item">
-<div class="time">11:00</div>
-城仓大桥
-</div>
-
-<div class="item">
-<div class="time">11:40</div>
-奥入濑溪流
-</div>
-
-<div class="item">
-<div class="time">14:00</div>
-十和田湖游船
-</div>
+<div class="item"><div class="time">14:40</div>旧弘前图书馆</div>
 
 <div class="item">
 <div class="time">15:00</div>
-乙女像
-</div>
-
-<div class="item">
-<div class="time">15:30</div>
-十和田神社
-</div>
-
-</div>
-
-</div>
-</details>
-
-
-<details>
-<summary>10月25日｜弘前一日游</summary>
-
-<div class="content">
-
-https://maps.google.com/?q=Hirosaki+Castle
-📍弘前城
-</a>
-
-https://maps.google.com/?q=montbell+hirosaki
-🛍 Montbell
-</a>
-
-<div class="timeline">
-
-<div class="item">
-弘前城
-</div>
-
-<div class="item">
-藤田纪念庭园
-</div>
-
-<div class="item">
-旧弘前图书馆
-</div>
-
-<div class="item">
 津轻藩睡魔村
+<br>
+三味线表演
 </div>
 
 <div class="item">
-15:30-17:30
-Montbell购物
+<div class="time">16:00-18:00</div>
+Montbell 弘前店
+</div>
+
+<div class="item">
+<div class="time">18:15</div>
+长尾中華そば
+</div>
+
+<div class="item"><div class="time">19:45</div>返回青森</div>
+
+<div class="item">
+<div class="time">21:00</div>
+お食事処 おさない
+
+<ul>
+<li>味噌贝烧</li>
+<li>扇贝刺身</li>
+<li>金枪鱼丼</li>
+</ul>
 </div>
 
 </div>
 
 </div>
 </details>
-
 
 <details>
 <summary>10月26日｜青森 → 东京</summary>
@@ -367,24 +369,34 @@ Montbell购物
 <div class="timeline">
 
 <div class="item">
-A-Factory
+<div class="time">08:30</div>
+Coffee Marron 早餐
 </div>
 
-<div class="item">
-Nebuta Museum
-</div>
+<div class="item"><div class="time">10:00</div>Nebuta Museum</div>
+
+<div class="item"><div class="time">11:00</div>ASPAM展望台</div>
 
 <div class="item">
-ASPAM
+<div class="time">12:00</div>
+丸青食堂
+
+<ul>
+<li>海鲜定食</li>
+<li>金枪鱼中腹丼</li>
+</ul>
 </div>
 
-<div class="item">
-14:24 Hayabusa
-</div>
+<div class="item"><div class="time">13:20</div>酒店取行李</div>
 
 <div class="item">
-17:30 东京站
+<div class="time">14:24</div>
+Hayabusa回东京
+<br>
+Green Car A窗
 </div>
+
+<div class="item"><div class="time">17:30</div>东京站</div>
 
 <div class="item">
 入住：
@@ -396,7 +408,6 @@ Ginza Capital Hotel Moegi
 </div>
 </details>
 
-
 <details>
 <summary>10月27日｜银座购物 + 回国</summary>
 
@@ -404,182 +415,79 @@ Ginza Capital Hotel Moegi
 
 <div class="timeline">
 
-<div class="item">
-GINZA SIX
-</div>
+<div class="item">GINZA SIX</div>
 
-<div class="item">
-银座三越
-</div>
+<div class="item">银座三越</div>
 
-<div class="item">
-银座松屋
-</div>
+<div class="item">银座松屋</div>
 
-<div class="item">
-14:30前往机场
-</div>
+<div class="item">木村家午餐</div>
 
-<div class="item">
-19:30 CA920回上海
-</div>
+<div class="item">14:30 前往成田机场</div>
+
+<div class="item">19:30 CA920回上海</div>
 
 </div>
 
 </div>
 </details>
 
-
 <div class="card">
 
-<h2>🛍 Montbell购物清单</h2>
+<h2>💴 预算</h2>
 
-<div class="checklist">
+住宿：<input type="number" id="hotel">
+餐饮：<input type="number" id="food">
+购物：<input type="number" id="shopping">
+其他：<input type="number" id="other">
 
-<label><input type="checkbox"> Plasma 1000</label>
-<label><input type="checkbox"> Versalite</label>
-<label><input type="checkbox"> Alpine Down</label>
-<label><input type="checkbox"> 日本限定T恤</label>
-<label><input type="checkbox"> 水壶</label>
-
-</div>
+<h3>合计：¥<span id="total">0</span></h3>
 
 </div>
-
-
-<div class="card">
-
-<h2>🍜 美食打卡</h2>
-
-<div class="checklist">
-
-<label><input type="checkbox"> Nokkedon海鲜丼</label>
-<label><input type="checkbox"> 青森扇贝</label>
-<label><input type="checkbox"> 苹果派</label>
-<label><input type="checkbox"> 味噌贝烧</label>
-<label><input type="checkbox"> 大间金枪鱼</label>
-<label><input type="checkbox"> 津轻牛</label>
-<label><input type="checkbox"> 煮干拉面</label>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>💴 预算统计</h2>
-
-<div class="row">
-
-<div>
-住宿(¥)
-<input type="number" id="hotel" value="0">
-</div>
-
-<div>
-餐饮(¥)
-<input type="number" id="food" value="0">
-</div>
-
-<div>
-购物(¥)
-<input type="number" id="shopping" value="0">
-</div>
-
-<div>
-其他(¥)
-<input type="number" id="other" value="0">
-</div>
-
-</div>
-
-<h3>总计：¥<span id="total">0</span></h3>
-
-</div>
-
 
 <div class="card">
 
 <h2>📝 旅行笔记</h2>
 
-<textarea id="notes"
-placeholder="记录每天的见闻、美食、照片机位..."></textarea>
+<textarea id="notes"></textarea>
 
 </div>
 
 </div>
-
-<button class="top-btn"
-onclick="window.scrollTo({top:0,behavior:'smooth'})">
-↑
-</button>
 
 <script>
 
 function toggleDark(){
- document.body.classList.toggle("dark");
- localStorage.setItem(
-   "darkMode",
-   document.body.classList.contains("dark")
- );
+document.body.classList.toggle("dark");
+localStorage.setItem("dark",
+document.body.classList.contains("dark"));
 }
 
-if(localStorage.getItem("darkMode")==="true"){
- document.body.classList.add("dark");
+if(localStorage.getItem("dark")==="true"){
+document.body.classList.add("dark");
 }
-
 
 const notes=document.getElementById("notes");
 
-notes.value=
-localStorage.getItem("tripNotes")||"";
+notes.value=localStorage.getItem("tripnote")||"";
 
 notes.addEventListener("input",()=>{
- localStorage.setItem(
-  "tripNotes",
-  notes.value
- );
+localStorage.setItem("tripnote",notes.value);
 });
 
-
 function calc(){
-
-const hotel=
-Number(document.getElementById("hotel").value)||0;
-
-const food=
-Number(document.getElementById("food").value)||0;
-
-const shopping=
-Number(document.getElementById("shopping").value)||0;
-
-const other=
-Number(document.getElementById("other").value)||0;
-
-const total=
-hotel+food+shopping+other;
+let total=
+(+hotel.value||0)+
+(+food.value||0)+
+(+shopping.value||0)+
+(+other.value||0);
 
 document.getElementById("total").innerText=total;
-
-localStorage.setItem("hotel",hotel);
-localStorage.setItem("food",food);
-localStorage.setItem("shopping",shopping);
-localStorage.setItem("other",other);
 }
 
 ["hotel","food","shopping","other"].forEach(id=>{
-
-const el=document.getElementById(id);
-
-el.value=
-localStorage.getItem(id)||0;
-
-el.addEventListener("input",calc);
-
+document.getElementById(id).addEventListener("input",calc);
 });
-
-calc();
 
 </script>
 
