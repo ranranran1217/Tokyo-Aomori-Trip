@@ -7,10 +7,9 @@
 <title>💰 东京青森旅行分账</title>
 
 <style>
-
 :root{
   --bg:#f5f7fa;
-  --card:#ffffff;
+  --card:#fff;
   --text:#222;
 }
 
@@ -18,10 +17,6 @@
   --bg:#111827;
   --card:#1f2937;
   --text:#f8fafc;
-}
-
-*{
-  box-sizing:border-box;
 }
 
 body{
@@ -33,20 +28,16 @@ body{
 }
 
 .container{
-  max-width:900px;
+  max-width:1000px;
   margin:auto;
 }
 
 .card{
   background:var(--card);
-  padding:20px;
   border-radius:16px;
+  padding:20px;
   margin-bottom:15px;
   box-shadow:0 3px 12px rgba(0,0,0,.08);
-}
-
-h1{
-  text-align:center;
 }
 
 input,select{
@@ -54,24 +45,25 @@ input,select{
   padding:10px;
   border-radius:8px;
   border:1px solid #ddd;
-}
-
-label{
-  display:block;
-  margin-top:10px;
+  margin-top:5px;
+  margin-bottom:10px;
 }
 
 button{
   border:none;
-  border-radius:10px;
-  padding:10px 16px;
+  border-radius:8px;
+  padding:10px 15px;
   cursor:pointer;
 }
 
 .add{
   background:#2563eb;
-  color:white;
-  margin-top:15px;
+  color:#fff;
+}
+
+.delete{
+  background:#dc2626;
+  color:#fff;
 }
 
 .darkbtn{
@@ -79,58 +71,50 @@ button{
   color:white;
 }
 
-.delete{
-  background:#dc2626;
-  color:white;
-  padding:6px 10px;
-}
-
-.persons{
+.people{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin-top:10px;
 }
 
 .item{
-  border-bottom:1px solid #eee;
+  border-bottom:1px solid #ddd;
   padding:12px 0;
-}
-
-.result{
-  margin-bottom:10px;
-  padding:10px;
-  border-radius:10px;
 }
 
 .receive{
   background:#dcfce7;
   color:#166534;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
 }
 
 .pay{
   background:#fee2e2;
   color:#991b1b;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
 }
 
-.total{
-  font-size:26px;
+.stat{
+  font-size:20px;
   font-weight:bold;
   color:#dc2626;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="container">
 
-<h1>💰 东京青森旅行分账</h1>
-
 <div class="card">
 
+<h1>💰 东京青森旅行分账</h1>
+
 <button class="darkbtn"
-onclick="toggleDark()">
+onclick="document.body.classList.toggle('dark')">
 🌙 深色模式
 </button>
 
@@ -143,8 +127,23 @@ onclick="toggleDark()">
 <label>项目名称</label>
 <input id="name" placeholder="例如：包车">
 
-<label>金额（日元）</label>
+<label>金额</label>
 <input id="amount" type="number">
+
+<label>币种</label>
+<select id="currency">
+<option value="JPY">JPY（日元）</option>
+<option value="CNY">CNY（人民币）</option>
+</select>
+
+<label>支付方式</label>
+<select id="payType">
+<option>现金</option>
+<option>信用卡</option>
+<option>微信</option>
+<option>支付宝</option>
+<option>Suica</option>
+</select>
 
 <label>付款人</label>
 <select id="payer">
@@ -156,33 +155,20 @@ onclick="toggleDark()">
 
 <label>参与人员</label>
 
-<div class="persons">
+<div class="people">
 
-<label>
-<input type="checkbox" value="Rena" checked>
-Rena
-</label>
+<label><input type="checkbox" value="Rena" checked> Rena</label>
 
-<label>
-<input type="checkbox" value="妞妈" checked>
-妞妈
-</label>
+<label><input type="checkbox" value="妞妈" checked> 妞妈</label>
 
-<label>
-<input type="checkbox" value="明希" checked>
-明希
-</label>
+<label><input type="checkbox" value="明希" checked> 明希</label>
 
-<label>
-<input type="checkbox" value="琪妈" checked>
-琪妈
-</label>
+<label><input type="checkbox" value="琪妈" checked> 琪妈</label>
 
 </div>
 
-<button class="add"
-onclick="addExpense()">
-＋ 添加消费
+<button class="add" onclick="addExpense()">
+➕ 添加消费
 </button>
 
 </div>
@@ -197,13 +183,21 @@ onclick="addExpense()">
 
 <div class="card">
 
-<h2>统计</h2>
+<h2>币种统计</h2>
 
-<div class="total" id="grandTotal">
-¥0
+<p>JPY 总额</p>
+<div class="stat" id="jpyTotal">¥0</div>
+
+<p>CNY 总额</p>
+<div class="stat" id="cnyTotal">¥0</div>
+
 </div>
 
-<p id="summary"></p >
+<div class="card">
+
+<h2>支付方式统计</h2>
+
+<div id="paymentStats"></div>
 
 </div>
 
@@ -221,195 +215,238 @@ onclick="addExpense()">
 
 let expenses =
 JSON.parse(
-localStorage.getItem("trip_split")
+localStorage.getItem("trip_expenses_v2")
 ) || [];
 
-function toggleDark(){
- document.body.classList.toggle("dark");
-}
-
 function save(){
- localStorage.setItem(
-   "trip_split",
-   JSON.stringify(expenses)
- );
+localStorage.setItem(
+"trip_expenses_v2",
+JSON.stringify(expenses)
+);
 }
 
 function addExpense(){
 
- const name =
-   document.getElementById("name").value.trim();
+const name =
+document.getElementById("name").value.trim();
 
- const amount =
-   Number(document.getElementById("amount").value);
+const amount =
+Number(
+document.getElementById("amount").value
+);
 
- const payer =
-   document.getElementById("payer").value;
+const currency =
+document.getElementById("currency").value;
 
- const checks =
-   document.querySelectorAll(
-   '.persons input[type="checkbox"\]:checked');
+const payType =
+document.getElementById("payType").value;
 
- const participants =
-   [...checks].map(x=>x.value);
+const payer =
+document.getElementById("payer").value;
 
- if(!name || !amount || participants.length===0){
-   alert("请填写完整信息");
-   return;
- }
+const participants =
+[...document.querySelectorAll(
+'input[type="checkbox"]:checked'
 
- expenses.push({
-   name,
-   amount,
-   payer,
-   participants
- });
+)].map(x=>x.value);
 
- document.getElementById("name").value="";
- document.getElementById("amount").value="";
+if(
+!name ||
+!amount ||
+participants.length===0
+){
+alert("请填写完整信息");
+return;
+}
 
- save();
- render();
+expenses.push({
+name,
+amount,
+currency,
+payType,
+payer,
+participants
+});
+
+document.getElementById("name").value="";
+document.getElementById("amount").value="";
+
+save();
+render();
 
 }
 
-function deleteExpense(index){
+function removeExpense(index){
 
- expenses.splice(index,1);
+expenses.splice(index,1);
 
- save();
- render();
+save();
+render();
 
 }
 
 function render(){
 
- const people={
-   "Rena":{paid:0,share:0},
-   "妞妈":{paid:0,share:0},
-   "明希":{paid:0,share:0},
-   "琪妈":{paid:0,share:0}
- };
+const people={
+"Rena":{paid:0,share:0},
+"妞妈":{paid:0,share:0},
+"明希":{paid:0,share:0},
+"琪妈":{paid:0,share:0}
+};
 
- const list =
- document.getElementById("expenseList");
+let jpy=0;
+let cny=0;
 
- list.innerHTML="";
+let payStats={};
 
- expenses.forEach((e,index)=>{
+const list=
+document.getElementById("expenseList");
 
-   people[e.payer].paid += e.amount;
+list.innerHTML="";
 
-   const per =
-   e.amount / e.participants.length;
+expenses.forEach((e,index)=>{
 
-   e.participants.forEach(p=>{
-     people[p].share += per;
-   });
+if(e.currency==="JPY"){
+jpy+=e.amount;
+}else{
+cny+=e.amount;
+}
 
-   list.innerHTML += `
-   <div class="item">
+if(!payStats[e.payType]){
+payStats[e.payType]=0;
+}
 
-   <strong>${e.name}</strong>
+payStats[e.payType]+=e.amount;
 
-   <br>
+people[e.payer].paid += e.amount;
 
-   ¥${e.amount.toLocaleString()}
+const per =
+e.amount / e.participants.length;
 
-   <br>
+e.participants.forEach(p=>{
+people[p].share += per;
+});
 
-   付款人：
-   ${e.payer}
+list.innerHTML += `
+<div class="item">
 
-   <br>
+<strong>${e.name}</strong><br>
 
-   参与：
-   ${e.participants.join(" / ")}
+金额：
+${e.amount.toLocaleString()} ${e.currency}<br>
 
-   <br><br>
+付款：
+${e.payer}<br>
 
-   <button
-   class="delete"
-   onclick="deleteExpense(${index})">
-   删除
-   </button>
+方式：
+${e.payType}<br>
 
-   </div>
-   `;
- });
+参与：
+${e.participants.join(" / ")}<br><br>
 
- const total =
- expenses.reduce(
- (a,b)=>a+b.amount,0);
+<button class="delete"
+onclick="removeExpense(${index})">
+删除
+</button>
 
- document.getElementById(
- "grandTotal"
- ).innerText =
- "¥"+total.toLocaleString();
+</div>
+`;
 
- document.getElementById(
- "summary"
- ).innerText =
- `共 ${expenses.length} 笔消费`;
+});
 
- let resultHtml="";
+document.getElementById(
+"jpyTotal"
+).innerText =
+"¥"+jpy.toLocaleString();
 
- Object.keys(people).forEach(name=>{
+document.getElementById(
+"cnyTotal"
+).innerText =
+"¥"+cny.toLocaleString();
 
-   const paid=
-   people[name].paid;
+let statHtml="";
 
-   const share=
-   people[name].share;
+Object.keys(payStats).forEach(k=>{
 
-   const diff=
-   paid-share;
+statHtml+=`
+<p>
+${k}：
+${payStats[k].toLocaleString()}
+</p>
+`;
 
-   if(diff>=0){
+});
 
-     resultHtml += `
-     <div class="result receive">
+document.getElementById(
+"paymentStats"
+).innerHTML=
+statHtml;
 
-     ✅ ${name}
+let result="";
 
-     <br>
-     已支付：¥${Math.round(paid).toLocaleString()}
+Object.keys(people).forEach(name=>{
 
-     <br>
-     应承担：¥${Math.round(share).toLocaleString()}
+const diff=
+people[name].paid-
+people[name].share;
 
-     <br>
-     最终应收：¥${Math.round(diff).toLocaleString()}
+if(diff>=0){
 
-     </div>
-     `;
+result+=`
+<div class="receive">
 
-   }else{
+✅ ${name}<br>
 
-     resultHtml += `
-     <div class="result pay">
+已支付：
+${Math.round(
+people[name].paid
+).toLocaleString()}<br>
 
-     💸 ${name}
+应承担：
+${Math.round(
+people[name].share
+).toLocaleString()}<br>
 
-     <br>
-     已支付：¥${Math.round(paid).toLocaleString()}
+应收：
+${Math.round(
+diff
+).toLocaleString()}
 
-     <br>
-     应承担：¥${Math.round(share).toLocaleString()}
+</div>
+`;
 
-     <br>
-     最终应补：¥${Math.round(Math.abs(diff)).toLocaleString()}
+}else{
 
-     </div>
-     `;
-   }
+result+=`
+<div class="pay">
 
- });
+💸 ${name}<br>
 
- document.getElementById(
- "settlement"
- ).innerHTML =
- resultHtml;
+已支付：
+${Math.round(
+people[name].paid
+).toLocaleString()}<br>
+
+应承担：
+${Math.round(
+people[name].share
+).toLocaleString()}<br>
+
+应补：
+${Math.round(
+Math.abs(diff)
+).toLocaleString()}
+
+</div>
+`;
+
+}
+
+});
+
+document.getElementById(
+"settlement"
+).innerHTML=result;
 
 }
 
