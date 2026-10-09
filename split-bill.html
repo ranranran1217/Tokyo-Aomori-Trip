@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>💰 东京青森旅行分账</title>
+
+<style>
+:root{
+  --bg:#f5f7fa;
+  --card:#fff;
+  --text:#222;
+}
+
+.dark{
+  --bg:#111827;
+  --card:#1f2937;
+  --text:#f8fafc;
+}
+
+body{
+  margin:0;
+  padding:20px;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+input,select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  margin-top:5px;
+  margin-bottom:10px;
+}
+
+button{
+  border:none;
+  border-radius:8px;
+  padding:10px 15px;
+  cursor:pointer;
+}
+
+.add{
+  background:#2563eb;
+  color:#fff;
+}
+
+.delete{
+  background:#dc2626;
+  color:#fff;
+}
+
+.darkbtn{
+  background:#111827;
+  color:white;
+}
+
+.people{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+}
+
+.item{
+  border-bottom:1px solid #ddd;
+  padding:12px 0;
+}
+
+.receive{
+  background:#dcfce7;
+  color:#166534;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.pay{
+  background:#fee2e2;
+  color:#991b1b;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.stat{
+  font-size:20px;
+  font-weight:bold;
+  color:#dc2626;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>💰 东京青森旅行分账</h1>
+
+<button class="darkbtn"
+onclick="document.body.classList.toggle('dark')">
+🌙 深色模式
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>新增消费</h2>
+
+<label>项目名称</label>
+<input id="name" placeholder="例如：包车">
+
+<label>金额</label>
+<input id="amount" type="number">
+
+<label>币种</label>
+<select id="currency">
+<option value="JPY">JPY（日元）</option>
+<option value="CNY">CNY（人民币）</option>
+</select>
+
+<label>支付方式</label>
+<select id="payType">
+<option>现金</option>
+<option>信用卡</option>
+<option>微信</option>
+<option>支付宝</option>
+<option>Suica</option>
+</select>
+
+<label>付款人</label>
+<select id="payer">
+<option>Rena</option>
+<option>妞妈</option>
+<option>明希</option>
+<option>琪妈</option>
+</select>
+
+<label>参与人员</label>
+
+<div class="people">
+
+<label><input type="checkbox" value="Rena" checked> Rena</label>
+
+<label><input type="checkbox" value="妞妈" checked> 妞妈</label>
+
+<label><input type="checkbox" value="明希" checked> 明希</label>
+
+<label><input type="checkbox" value="琪妈" checked> 琪妈</label>
+
+</div>
+
+<button class="add" onclick="addExpense()">
+➕ 添加消费
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>消费记录</h2>
+
+<div id="expenseList"></div>
+
+</div>
+
+<div class="card">
+
+<h2>币种统计</h2>
+
+<p>JPY 总额</p>
+<div class="stat" id="jpyTotal">¥0</div>
+
+<p>CNY 总额</p>
+<div class="stat" id="cnyTotal">¥0</div>
+
+</div>
+
+<div class="card">
+
+<h2>支付方式统计</h2>
+
+<div id="paymentStats"></div>
+
+</div>
+
+<div class="card">
+
+<h2>结算结果</h2>
+
+<div id="settlement"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let expenses =
+JSON.parse(
+localStorage.getItem("trip_expenses_v2")
+) || [];
+
+function save(){
+localStorage.setItem(
+"trip_expenses_v2",
+JSON.stringify(expenses)
+);
+}
+
+function addExpense(){
+
+const name =
+document.getElementById("name").value.trim();
+
+const amount =
+Number(
+document.getElementById("amount").value
+);
+
+const currency =
+document.getElementById("currency").value;
+
+const payType =
+document.getElementById("payType").value;
+
+const payer =
+document.getElementById("payer").value;
+
+const participants =
+[...document.querySelectorAll(
+'input[type="checkbox"]:checked'
+
+)].map(x=>x.value);
+
+if(
+!name ||
+!amount ||
+participants.length===0
+){
+alert("请填写完整信息");
+return;
+}
+
+expenses.push({
+name,
+amount,
+currency,
+payType,
+payer,
+participants
+});
+
+document.getElementById("name").value="";
+document.getElementById("amount").value="";
+
+save();
+render();
+
+}
+
+function removeExpense(index){
+
+expenses.splice(index,1);
+
+save();
+render();
+
+}
+
+function render(){
+
+const people={
+"Rena":{paid:0,share:0},
+"妞妈":{paid:0,share:0},
+"明希":{paid:0,share:0},
+"琪妈":{paid:0,share:0}
+};
+
+let jpy=0;
+let cny=0;
+
+let payStats={};
+
+const list=
+document.getElementById("expenseList");
+
+list.innerHTML="";
+
+expenses.forEach((e,index)=>{
+
+if(e.currency==="JPY"){
+jpy+=e.amount;
+}else{
+cny+=e.amount;
+}
+
+if(!payStats[e.payType]){
+payStats[e.payType]=0;
+}
+
+payStats[e.payType]+=e.amount;
+
+people[e.payer].paid += e.amount;
+
+const per =
+e.amount / e.participants.length;
+
+e.participants.forEach(p=>{
+people[p].share += per;
+});
+
+list.innerHTML += `
+<div class="item">
+
+<strong>${e.name}</strong><br>
+
+金额：
+${e.amount.toLocaleString()} ${e.currency}<br>
+
+付款：
+${e.payer}<br>
+
+方式：
+${e.payType}<br>
+
+参与：
+${e.participants.join(" / ")}<br><br>
+
+<button class="delete"
+onclick="removeExpense(${index})">
+删除
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"jpyTotal"
+).innerText =
+"¥"+jpy.toLocaleString();
+
+document.getElementById(
+"cnyTotal"
+).innerText =
+"¥"+cny.toLocaleString();
+
+let statHtml="";
+
+Object.keys(payStats).forEach(k=>{
+
+statHtml+=`
+<p>
+${k}：
+${payStats[k].toLocaleString()}
+</p>
+`;
+
+});
+
+document.getElementById(
+"paymentStats"
+).innerHTML=
+statHtml;
+
+let result="";
+
+Object.keys(people).forEach(name=>{
+
+const diff=
+people[name].paid-
+people[name].share;
+
+if(diff>=0){
+
+result+=`
+<div class="receive">
+
+✅ ${name}<br>
+
+已支付：
+${Math.round(
+people[name].paid
+).toLocaleString()}<br>
+
+应承担：
+${Math.round(
+people[name].share
+).toLocaleString()}<br>
+
+应收：
+${Math.round(
+diff
+).toLocaleString()}
+
+</div>
+`;
+
+}else{
+
+result+=`
+<div class="pay">
+
+💸 ${name}<br>
+
+已支付：
+${Math.round(
+people[name].paid
+).toLocaleString()}<br>
+
+应承担：
+${Math.round(
+people[name].share
+).toLocaleString()}<br>
+
+应补：
+${Math.round(
+Math.abs(diff)
+).toLocaleString()}
+
+</div>
+`;
+
+}
+
+});
+
+document.getElementById(
+"settlement"
+).innerHTML=result;
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>
